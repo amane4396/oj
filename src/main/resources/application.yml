@@ -1,0 +1,54 @@
+server:
+  port: 9101
+  servlet:
+    context-path: /api/v1
+    session:
+      cookie:
+        name: spms
+    encoding:
+      force: true
+      charset: utf-8
+spring:
+  profiles:
+    include: mybatisplus
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/system_oj?characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: XTxt1234
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      indent_output: true
+      fail_on_empty_beans: false
+    defaultPropertyInclusion: ALWAYS
+    deserialization:
+      fail_on_unknown_properties: false
+    parser:
+      allow_unquoted_control_chars: true
+      allow_single_quotes: true
+#  redis:
+#    host: r-bp1kavgufkx72gvzm1pd.redis.rds.aliyuncs.com
+#    port: 6379
+#    database: 0
+#    timeout: 10000ms
+#    lettuce:
+#      pool:
+#        max-active: 8
+#        max-wait: 10000ms
+#        max-idle: 200
+#        min-idle: 3
+#    password: Amane4396
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          client:
+            RestTemplate: off
+          HttpLogging: off
+

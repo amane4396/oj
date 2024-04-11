@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.oj.mapper.TClassMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="org.oj.entity.TClass">
+                    <id column="id" property="id"/>
+                    <result column="class_name" property="className"/>
+                    <result column="deleted" property="deleted"/>
+                    <result column="create_time" property="createTime"/>
+                    <result column="update_time" property="updateTime"/>
+        </resultMap>
+
+
+    <select id="selectWithAssociation" resultMap="Association">
+        SELECT t_class.*
+        FROM t_class tClass
+        WHERE tClass.deleted=0
+        <if test="ew !=null">
+            <if test="ew.nonEmptyOfWhere">
+                AND
+            </if>
+            ${ew.sqlSegment}
+        </if>
+    </select>
+    <resultMap id="Association" extends="BaseResultMap" type="org.oj.entity.TClass">
+    </resultMap>
+</mapper>
