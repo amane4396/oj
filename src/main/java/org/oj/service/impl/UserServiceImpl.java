@@ -64,9 +64,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public void create(UserForCreateDto dto) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
+//        User operator = PermissionUtil.getCurrentUser();
         User data = UserConvert.INSTANCE.mapByCreateDto(dto);
+        if (userService.count(new LambdaQueryWrapper<User>().eq(User::getMemberId, data.getMemberId())) > 0) {
+            throw new ActiveException("该用户已存在！");
+        }
+        if(StringUtils.isEmpty(data.getMemberId())){
+            throw new ActiveException("请输入正确的学工号！");
+        }
+        if(StringUtils.isEmpty(data.getName())){
+            throw new ActiveException("请输入正确的姓名！");
+        }
+        if(StringUtils.isEmpty(data.getPassword())){
+            throw new ActiveException("请输入正确格式的密码！");
+        }
 
+        data.setSalt(SecurityUtil.SALT);
+        data.setPassword(SecurityUtil.encrypt("MD5", data.getPassword(), data.getSalt()));
         // region 数据处理、入库
         data.setId(UuidUtil.generate());
         userService.save(data);

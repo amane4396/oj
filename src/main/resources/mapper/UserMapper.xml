@@ -18,11 +18,14 @@
                     <result column="update_time" property="updateTime"/>
         </resultMap>
 
-
     <select id="selectWithAssociation" resultMap="Association">
-        SELECT user.*
+        SELECT user.*,
+        user_type.name AS roleName,
+        user_type.type AS roleType,
+        user_type.id AS typeId
         FROM user user
-        WHERE user.deleted=0
+        LEFT JOIN user_type ON user_type.type = user.role_Id
+        WHERE user.deleted = 0
         <if test="ew !=null">
             <if test="ew.nonEmptyOfWhere">
                 AND
@@ -31,5 +34,10 @@
         </if>
     </select>
     <resultMap id="Association" extends="BaseResultMap" type="org.oj.entity.User">
+        <association property="userType" javaType="org.oj.entity.UserType">
+            <id column="typeId" property="id"/>
+            <result column="roleName" property="name"/>
+            <result column="roleType" property="type"/>
+        </association>
     </resultMap>
 </mapper>

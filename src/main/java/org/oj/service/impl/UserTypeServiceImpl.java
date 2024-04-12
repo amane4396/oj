@@ -75,7 +75,7 @@ public class UserTypeServiceImpl extends ServiceImpl<UserTypeMapper, UserType> i
 
     @Override
     public UserTypeForDetailDto detail(String id) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
+//        User operator = PermissionUtil.getCurrentUser();
         // TODO 关联与非关联选其一
         // 非关联
         UserType data = userTypeService.getById(id);
@@ -93,7 +93,7 @@ public class UserTypeServiceImpl extends ServiceImpl<UserTypeMapper, UserType> i
 
     @Override
     public void update(UserTypeForUpdateDto dto) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
+//        User operator = PermissionUtil.getCurrentUser();
         UserType data = UserTypeConvert.INSTANCE.mapByUpdateDto(dto);
         UserType source = userTypeService.getById(data.getId());
 
@@ -110,7 +110,7 @@ public class UserTypeServiceImpl extends ServiceImpl<UserTypeMapper, UserType> i
 
     @Override
     public void delete(List<String> ids) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
+//        User operator = PermissionUtil.getCurrentUser();
 
         int associatedCount = 0;
         int notFoundCount = 0;

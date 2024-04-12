@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.ToString;
 import org.oj.constant.*;
 
 /**
@@ -18,7 +19,7 @@ import org.oj.constant.*;
  * @update 2024-04-10
  */
 @Data
-@TableName("user")
+@ToString
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +31,7 @@ public class User implements Serializable {
     private String id;
 
     /**
-     * 用户类型		
+     * 用户类型
      */
     @TableField("role_id")
     private Integer roleId;
@@ -83,6 +84,12 @@ public class User implements Serializable {
      */
     @TableField("email")
     private String email;
+
+    /**
+     * 角色
+     */
+    @TableField(exist = false)
+    private UserType userType;
 
     /**
      * 创建时间

@@ -15,7 +15,7 @@ import java.security.MessageDigest;
 @Component
 public class SecurityUtil {
 
-    public final static String SALT = "wxKYXuTPST5SG0jMQzVPsg==";
+    public final static String SALT = "wxKYXuTPST5SGa0jMQzVPsg=";
 
     public static String encrypt(String type, String s, String salt) {
         String result = null;
