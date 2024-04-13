@@ -14,8 +14,8 @@ import org.oj.constant.*;
  * 提交记录 submit
  *
  * @author XT
- * @create 2024-04-10
- * @update 2024-04-10
+ * @create 2024-04-13
+ * @update 2024-04-13
  */
 @Data
 @TableName("submit")
@@ -61,10 +61,16 @@ public class Submit implements Serializable {
     private String code;
 
     /**
-     * 提示
+     * 备注
      */
     @TableField("remark")
     private String remark;
+
+    /**
+     * 题号
+     */
+    @TableField("task_id")
+    private String taskId;
 
     /**
      * 

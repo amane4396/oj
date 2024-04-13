@@ -4,13 +4,14 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 /**
  * 详情、编辑使用
  * 后端 -> 前端
  *
  * @author XT
- * @create 2024-04-10
- * @update 2024-04-10
+ * @create 2024-04-13
+ * @update 2024-04-13
  */
 @Data
 public class SubmitForDetailDto implements Serializable {
@@ -48,9 +49,14 @@ public class SubmitForDetailDto implements Serializable {
     private String code;
 
     /**
-     * 提示
+     * 备注
      */
     private String remark;
+
+    /**
+     * 题号
+     */
+    private String taskId;
 
     /**
      *

@@ -15,6 +15,7 @@ import org.oj.exception.ActiveException;
 import org.oj.mapper.SubmitMapper;
 import org.oj.mapstruct.SubmitConvert;
 import org.oj.service.SubmitService;
+import org.oj.service.UserService;
 import org.oj.util.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Service;
@@ -31,14 +32,17 @@ import java.util.stream.Collectors;
  * 提交记录 服务实现类
  *
  * @author XT
- * @create 2024-04-10
- * @update 2024-04-10
+ * @create 2024-04-13
+ * @update 2024-04-13
  */
 @Service
 public class SubmitServiceImpl extends ServiceImpl<SubmitMapper, Submit> implements SubmitService {
 
     @Resource
     private SubmitService submitService;
+
+    @Resource
+    private UserService userService;
 
     @Override
     public Submit selectWithAssociation(Wrapper<Submit> wrapper) {
@@ -87,7 +91,6 @@ public class SubmitServiceImpl extends ServiceImpl<SubmitMapper, Submit> impleme
             throw new ActiveException(ResCode.NOT_FOUND);
         }
         // endregion
-
         return SubmitConvert.INSTANCE.mapToDetailDto(data);
     }
 
@@ -101,7 +104,7 @@ public class SubmitServiceImpl extends ServiceImpl<SubmitMapper, Submit> impleme
         if (source == null) {
             throw new ActiveException(ResCode.NOT_FOUND);
         }
-
+        // endregion
         // region 数据处理、入库
         submitService.updateById(data);
         // endregion
@@ -126,6 +129,11 @@ public class SubmitServiceImpl extends ServiceImpl<SubmitMapper, Submit> impleme
                 continue;
             }
         }
+        // endregion
+
+        // region 删除数据
+        // 关联数据删除
+        // TODO
 
         if (ids.size() > 0) {
             submitService.removeByIds(ids);
@@ -148,4 +156,16 @@ public class SubmitServiceImpl extends ServiceImpl<SubmitMapper, Submit> impleme
         }
     }
 
+    @Override
+    public void submit(SubmitForCreateDto dto) throws Exception{
+//        User user = PermissionUtil.getCurrentUser();
+        User user = userService.getById(dto.getUserId());
+        if(user == null){
+            throw new ActiveException("非法提交！");
+        }
+        Submit data = SubmitConvert.INSTANCE.mapByCreateDto(dto);
+        data.setId(UuidUtil.generate());
+
+
+    }
 }

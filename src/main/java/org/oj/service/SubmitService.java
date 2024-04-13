@@ -16,8 +16,8 @@ import java.util.List;
  * 提交记录 服务类
  *
  * @author XT
- * @create 2024-04-10
- * @update 2024-04-10
+ * @create 2024-04-13
+ * @update 2024-04-13
  */
 public interface SubmitService extends IService<Submit>, ServiceWithAssociation<Submit> {
 
@@ -64,27 +64,11 @@ public interface SubmitService extends IService<Submit>, ServiceWithAssociation<
      */
     void delete(List<String> ids) throws Exception;
 
-    // /**
-    //  * 导入
-    //  *
-    //  * @param multipartRequest MultipartRequest
-    //  * @throws Exception Exception
-    //  */
-    // void importData(MultipartRequest multipartRequest) throws Exception;
+    /**
+     * 检测并且提交代码
+     *
+     * @param dto Sub
+     */
+    void submit(SubmitForCreateDto dto) throws Exception;
 
-    // /**
-    //  * 导出
-    //  *
-    //  * @param wrapper QueryWrapper<Submit>
-    //  * @throws Exception Exception
-    //  */
-    // public void exportData(QueryWrapper<Submit> wrapper) throws Exception;
-
-    // /**
-    //  * 获取下拉列表框封装数据
-    //  *
-    //  * @return List<SelectListItem>
-    //  * @throws Exception Exception
-    //  */
-    // List<SelectListItem> selectList() throws Exception;
 }

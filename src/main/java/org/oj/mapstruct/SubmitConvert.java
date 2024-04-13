@@ -1,11 +1,9 @@
 package org.oj.mapstruct;
 
-import org.oj.dto.submit.SubmitForCreateDto;
-import org.oj.dto.submit.SubmitForDetailDto;
-import org.oj.dto.submit.SubmitForListDto;
-import org.oj.dto.submit.SubmitForUpdateDto;
+import org.oj.dto.submit.*;
 import org.oj.entity.Submit;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -15,8 +13,8 @@ import java.util.List;
  * Submit转换
  *
  * @author XT
- * @create 2024-04-10
- * @update 2024-04-10
+ * @create 2024-04-13
+ * @update 2024-04-13
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SubmitConvert {
