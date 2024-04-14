@@ -3,9 +3,6 @@ package org.oj.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.oj.base.SelectListEnumItem;
-import org.oj.base.SelectListItem;
-import org.oj.constant.*;
 import org.oj.dto.task.*;
 import org.oj.entity.*;
 
@@ -16,8 +13,8 @@ import java.util.List;
  * 题目表 服务类
  *
  * @author XT
- * @create 2024-04-10
- * @update 2024-04-10
+ * @create 2024-04-14
+ * @update 2024-04-14
  */
 public interface TaskService extends IService<Task>, ServiceWithAssociation<Task> {
 

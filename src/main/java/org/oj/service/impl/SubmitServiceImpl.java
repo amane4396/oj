@@ -18,6 +18,7 @@ import org.oj.service.SubmitService;
 import org.oj.service.UserService;
 import org.oj.util.*;
 import org.apache.commons.lang3.ArrayUtils;
+import org.oj.vo.Question;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -165,6 +166,9 @@ public class SubmitServiceImpl extends ServiceImpl<SubmitMapper, Submit> impleme
         }
         Submit data = SubmitConvert.INSTANCE.mapByCreateDto(dto);
         data.setId(UuidUtil.generate());
+        Question question = new Question();
+        question.setCode(data.getCode());
+        question.setStdin("");
 
 
     }

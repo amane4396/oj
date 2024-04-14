@@ -1,11 +1,9 @@
 package org.oj.mapstruct;
 
-import org.oj.dto.task.TaskForCreateDto;
-import org.oj.dto.task.TaskForDetailDto;
-import org.oj.dto.task.TaskForListDto;
-import org.oj.dto.task.TaskForUpdateDto;
+import org.oj.dto.task.*;
 import org.oj.entity.Task;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -15,8 +13,8 @@ import java.util.List;
  * Task转换
  *
  * @author XT
- * @create 2024-04-10
- * @update 2024-04-10
+ * @create 2024-04-14
+ * @update 2024-04-14
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface TaskConvert {

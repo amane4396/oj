@@ -14,8 +14,8 @@ import org.oj.constant.*;
  * 题目表 task
  *
  * @author XT
- * @create 2024-04-10
- * @update 2024-04-10
+ * @create 2024-04-14
+ * @update 2024-04-14
  */
 @Data
 @TableName("task")
@@ -47,6 +47,18 @@ public class Task implements Serializable {
     @TableField("deleted")
     @TableLogic
     private Integer deleted;
+
+    /**
+     * 模板内容
+     */
+    @TableField("template")
+    private String template;
+
+    /**
+     * 
+     */
+    @TableField("rank")
+    private String rank;
 
     /**
      * 

@@ -10,8 +10,8 @@ import java.io.Serializable;
  * 前端 -> 后端
  *
  * @author XT
- * @create 2024-04-10
- * @update 2024-04-10
+ * @create 2024-04-14
+ * @update 2024-04-14
  */
 @Data
 public class TaskForUpdateDto implements Serializable {
@@ -32,4 +32,14 @@ public class TaskForUpdateDto implements Serializable {
      * 题目标题
      */
     private String title;
+
+    /**
+     * 模板内容
+     */
+    private String template;
+
+    /**
+     * 
+     */
+    private String hard;
 }

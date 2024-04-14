@@ -8,6 +8,8 @@
                     <result column="contents" property="contents"/>
                     <result column="title" property="title"/>
                     <result column="deleted" property="deleted"/>
+                    <result column="template" property="template"/>
+                    <result column="hard" property="hard"/>
                     <result column="create_time" property="createTime"/>
                     <result column="update_time" property="updateTime"/>
         </resultMap>

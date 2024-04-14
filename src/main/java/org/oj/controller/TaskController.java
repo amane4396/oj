@@ -1,15 +1,13 @@
 package org.oj.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.oj.annotation.Permission;
-import org.oj.constant.*;
 import org.oj.dto.task.*;
-import org.oj.entity.*;
+import org.oj.entity.Task;
 import org.oj.service.*;
 import org.oj.util.*;
 import org.oj.vo.*;
@@ -92,7 +90,6 @@ public class TaskController {
      * @return JsonRes
      */
     @GetMapping("/{id}/detail")
-    @Permission("task.detail")
     public JsonRes detail(@PathVariable("id") String id) throws Exception {
         return JsonRes.success(taskService.detail(id));
     }
@@ -124,58 +121,4 @@ public class TaskController {
         return JsonRes.deleteSuccess();
     }
 
-    // /**
-    //  * 导入
-    //  *
-    //  * @param multipartRequest MultipartRequest
-    //  * @return JsonResRes
-    //  */
-    // @PostMapping("/import")
-    // @Permission("task.import")
-    // public JsonRes importData(MultipartRequest multipartRequest) {
-    //     taskService.importData(multipartRequest);
-    //     return JsonRes.importSuccess();
-    // }
-
-    // /**
-    //  * 导出
-    //  *
-    //  * @param response    HttpServletResponse
-    //  * @param requestBody RequestBody
-    //  * @return JsonResRes
-    //  */
-    // @PostMapping("/export")
-    // @Permission("task.export")
-    // public void exportData(HttpServletResponse response, @RequestBody String requestBody) throws Exception {
-    //     QueryWrapper<Task> wrapper = new QueryWrapper<>();
-    //
-    //     // 查询
-    //     Map<String, JsonNode> query = DataListUtil.getQuery(requestBody);
-    //     DataListUtil.query(Task.class, wrapper, query);
-    //
-    //     // 排序
-    //     Sort sort = DataListUtil.getSort(requestBody);
-    //     if (sort != null) {
-    //         wrapper.orderBy(true, sort.getAsc(), sort.getProperty());
-    //     } else {
-    //          // TODO 指定排序
-    //          // wrapper.orderBy(true, true升序/false降序, "字段名");
-    //     }
-    //
-    //    try (Workbook workbook = taskService.exportData(wrapper); OutputStream os = response.getOutputStream()) {
-    //    workbook.write(os);
-    //    os.flush();
-    //    }
-    // }
-
-    // /**
-    //  * 获取下拉列表选项数据
-    //  *
-    //  * @return JsonRes List<SelectListItem>
-    //  */
-    // @GetMapping("/selectlist")
-    // @Permission()
-    // public JsonRes getSelectList() throws Exception {
-    //     return JsonRes.success(taskService.selectList());
-    // }
 }

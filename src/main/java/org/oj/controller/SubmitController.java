@@ -39,6 +39,7 @@ public class SubmitController {
 
     @Resource
     private ObjectMapper objectMapper;
+
     @Resource
     private SubmitService submitService;
 

@@ -4,13 +4,14 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 /**
  * 列表数据使用
  * 后端 -> 前端
  *
  * @author XT
- * @create 2024-04-10
- * @update 2024-04-10
+ * @create 2024-04-14
+ * @update 2024-04-14
  */
 @Data
 public class TaskForListDto implements Serializable {
@@ -36,6 +37,16 @@ public class TaskForListDto implements Serializable {
      *
      */
     private Integer deleted;
+
+    /**
+     * 模板内容
+     */
+    private String template;
+
+    /**
+     *
+     */
+    private String hard;
 
     /**
      *

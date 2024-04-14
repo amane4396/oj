@@ -31,8 +31,8 @@ import java.util.stream.Collectors;
  * 题目表 服务实现类
  *
  * @author XT
- * @create 2024-04-10
- * @update 2024-04-10
+ * @create 2024-04-14
+ * @update 2024-04-14
  */
 @Service
 public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements TaskService {
@@ -64,18 +64,13 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
 
     @Override
     public void create(TaskForCreateDto dto) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
         Task data = TaskConvert.INSTANCE.mapByCreateDto(dto);
-
-        // region 数据处理、入库
         data.setId(UuidUtil.generate());
         taskService.save(data);
-        // endregion
     }
 
     @Override
     public TaskForDetailDto detail(String id) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
         // TODO 关联与非关联选其一
         // 非关联
         Task data = taskService.getById(id);
@@ -87,13 +82,11 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
             throw new ActiveException(ResCode.NOT_FOUND);
         }
         // endregion
-
         return TaskConvert.INSTANCE.mapToDetailDto(data);
     }
 
     @Override
     public void update(TaskForUpdateDto dto) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
         Task data = TaskConvert.INSTANCE.mapByUpdateDto(dto);
         Task source = taskService.getById(data.getId());
 
@@ -102,7 +95,6 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
             throw new ActiveException(ResCode.NOT_FOUND);
         }
         // endregion
-
         // region 数据处理、入库
         taskService.updateById(data);
         // endregion
@@ -110,7 +102,6 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
 
     @Override
     public void delete(List<String> ids) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
 
         int associatedCount = 0;
         int notFoundCount = 0;
@@ -126,9 +117,12 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
                 ids.remove(i--);
                 continue;
             }
-
         }
         // endregion
+
+        // region 删除数据
+        // 关联数据删除
+        // TODO
 
         if (ids.size() > 0) {
             taskService.removeByIds(ids);
@@ -150,5 +144,4 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
             throw new ActiveException(ResMsg.PARTIAL_DELETE_DATA_NOT_FOUND);
         }
     }
-
 }
