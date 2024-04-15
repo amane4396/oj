@@ -9,24 +9,33 @@ import org.oj.base.SelectListEnumItem;
 import org.oj.base.SelectListItem;
 import org.oj.constant.*;
 import org.oj.dto.submit.*;
+import org.oj.entity.Example;
 import org.oj.entity.Submit;
 import org.oj.entity.User;
 import org.oj.exception.ActiveException;
 import org.oj.mapper.SubmitMapper;
 import org.oj.mapstruct.SubmitConvert;
+import org.oj.service.ExampleService;
 import org.oj.service.SubmitService;
 import org.oj.service.UserService;
 import org.oj.util.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.oj.vo.Question;
+import org.springframework.scheduling.support.SimpleTriggerContext;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import javax.xml.crypto.Data;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -44,6 +53,9 @@ public class SubmitServiceImpl extends ServiceImpl<SubmitMapper, Submit> impleme
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private ExampleService exampleService;
 
     @Override
     public Submit selectWithAssociation(Wrapper<Submit> wrapper) {
@@ -69,7 +81,6 @@ public class SubmitServiceImpl extends ServiceImpl<SubmitMapper, Submit> impleme
 
     @Override
     public void create(SubmitForCreateDto dto) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
         Submit data = SubmitConvert.INSTANCE.mapByCreateDto(dto);
 
         // region 数据处理、入库
@@ -158,18 +169,99 @@ public class SubmitServiceImpl extends ServiceImpl<SubmitMapper, Submit> impleme
     }
 
     @Override
-    public void submit(SubmitForCreateDto dto) throws Exception{
+    public JsonRes submit(SubmitForCreateDto dto) throws Exception {
 //        User user = PermissionUtil.getCurrentUser();
         User user = userService.getById(dto.getUserId());
         if(user == null){
             throw new ActiveException("非法提交！");
         }
-        Submit data = SubmitConvert.INSTANCE.mapByCreateDto(dto);
-        data.setId(UuidUtil.generate());
+
         Question question = new Question();
-        question.setCode(data.getCode());
+        question.setCode(dto.getCode());
         question.setStdin("");
+        // 编译代码
+        CustomClassLoader customClassLoader = new CustomClassLoader();
+        Task task = new Task();
+        SubmitResDto resDto = new SubmitResDto();
+        try {
+            task.compile(question);
+        } catch (Exception e) {
+            resDto.setReason(e.getMessage());
+            resDto.setMsg("编译错误");
+            resDto.setRunTime("ERR");
+            resDto.setPassNum("0");
+            dto.setPassNum("0");
+            dto.setRemark("编译错误");
+            dto.setState(2);
+            submitService.create(dto);
+            return JsonRes.success(resDto);
+        }
+        // 加载类获取方法反射
+        Class<?> cls = customClassLoader.loadClassFromFile("./tmp/Solution.class");
+        LambdaQueryWrapper<Example> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Example::getTaskId, dto.getTaskId());
+        Method solution = cls.getMethod("solution", String.class);
+        List<Example> examples = exampleService.list(lambdaQueryWrapper);
+        int count = examples.size();
+        int passed = 0;
+        long begin = System.currentTimeMillis();
+        for(Example example : examples){
+            String str =  solution.invoke(cls, example.getInput()).toString();
+            if(str.equals(example.getResult())){
+                passed++;
+            }else{
+                resDto.setReason(example.getInput());
+            }
+        }
+        long end = System.currentTimeMillis();
+        if(passed == count){
+            dto.setState(1);
+            dto.setRemark("通过");
+            resDto.setMsg("ACCEPT");
+        }else{
+            dto.setState(2);
+            dto.setRemark("样例未全部通过");
+            resDto.setMsg("FAILED");
+        }
+        dto.setPassNum(passed + "/" + count);
+
+        dto.setRunTime(String.valueOf(end - begin));
+        submitService.create(dto);
+        resDto.setRunTime((end - begin) + "ms");
+        resDto.setPassNum(passed + "/" + count);
+        return JsonRes.success(resDto);
+    }
+
+    @Override
+    public JsonRes testCode(RunCodeDto dto) throws ActiveException {
+        User user = userService.getById(dto.getUserId());
+        if(user == null){
+            throw new ActiveException("非法提交！");
+        }
+
+        Question question = new Question();
+        question.setCode(dto.getCode());
+        question.setStdin("");
+        RunResDto resDto = new RunResDto();
+        // 编译代码
+        Task task = new Task();
+        try {
+            task.compile(question);
+        } catch (Exception e) {
+            resDto.setRes("编译错误:\n" + e.getMessage());
+            resDto.setStdout("");
+            return JsonRes.success(resDto);
+        }
 
 
+        try {
+            resDto.setStdout(task.run());
+        } catch (Exception e) {
+            resDto.setRes("运行失败:\n" + e.getMessage());
+            resDto.setStdout("");
+            return JsonRes.success(resDto);
+        }
+        resDto.setRes("运行成功");
+        return JsonRes.success(resDto);
     }
 }

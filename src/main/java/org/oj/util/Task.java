@@ -70,13 +70,14 @@ public class Task {
         String cmd = String.format(
                 "javac -encoding UTF-8 %s -d %s", CODE, WORK_DIR
         );
+
         System.out.println("编译命令:" + cmd);
         CommandUtil.run(cmd, null, COMPILE_ERROR);
         //2.2编译完成之后，判读编译是否出错，如果出错就不需要再执行
         //认为 COMPILE_ERROR 文件为空表示编译未出错，非空表示编译出错
         String compileError = FileUtil.readFile(COMPILE_ERROR);
         if (!"".equals(compileError)) {
-            throw new ActiveException("编译出错：\n" + compileError);
+            throw new ActiveException(compileError);
         }
     }
 
@@ -90,7 +91,7 @@ public class Task {
         String stdErr = FileUtil.readFile(STDERR);
         if (!"".equals(stdErr)) {
             System.out.println("运行出错");
-            throw new ActiveException("运行出错：\n" + stdErr);
+            throw new ActiveException(stdErr);
         }
         return FileUtil.readFile(STDOUT);
     }

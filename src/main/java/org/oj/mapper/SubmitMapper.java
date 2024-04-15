@@ -10,8 +10,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 提交记录 Mapper 接口
  *
  * @author XT
- * @create 2024-04-13
- * @update 2024-04-13
+ * @create 2024-04-15
+ * @update 2024-04-15
  */
 public interface SubmitMapper extends BaseMapper<Submit> {
     /**

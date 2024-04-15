@@ -8,6 +8,7 @@ import org.oj.base.SelectListItem;
 import org.oj.constant.*;
 import org.oj.dto.submit.*;
 import org.oj.entity.*;
+import org.oj.util.JsonRes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +70,14 @@ public interface SubmitService extends IService<Submit>, ServiceWithAssociation<
      *
      * @param dto Sub
      */
-    void submit(SubmitForCreateDto dto) throws Exception;
+    JsonRes submit(SubmitForCreateDto dto) throws Exception;
 
+    /**
+     * 测试代码
+     *
+     * @param runCodeDto RunCodeDto
+     * @throws Exception Exp
+     * @return JsonRes res
+     */
+    JsonRes testCode(RunCodeDto runCodeDto) throws Exception;
 }

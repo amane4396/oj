@@ -1,9 +1,6 @@
 package org.oj.util;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * 工具类，方便读写文件
@@ -17,14 +14,16 @@ public class FileUtil {
     public static String readFile(String filePath) {
         //当涉及到编译错误，标准输出结果等文件内容都是文本文件。此处使用字符流方式来实现
         //try() ()中的内容是可以被自动关闭的
-        try(FileReader fileReader = new FileReader(filePath);
-            BufferedReader br = new BufferedReader(fileReader)) {
+        try(FileInputStream inputStream = new FileInputStream(filePath);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "GBK");
+            BufferedReader br = new BufferedReader(inputStreamReader)) {
             StringBuilder sb = new StringBuilder();
             //按行读取文件内容
             String line = "";
             while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
+            System.out.println(sb);
             return sb.toString();
         } catch (IOException e) {
             e.printStackTrace();

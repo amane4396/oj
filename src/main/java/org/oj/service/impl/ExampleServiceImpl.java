@@ -64,7 +64,6 @@ public class ExampleServiceImpl extends ServiceImpl<ExampleMapper, Example> impl
 
     @Override
     public void create(ExampleForCreateDto dto) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
         Example data = ExampleConvert.INSTANCE.mapByCreateDto(dto);
 
         // region 数据处理、入库
@@ -75,7 +74,6 @@ public class ExampleServiceImpl extends ServiceImpl<ExampleMapper, Example> impl
 
     @Override
     public ExampleForDetailDto detail(String id) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
         // TODO 关联与非关联选其一
         // 非关联
         Example data = exampleService.getById(id);
@@ -95,7 +93,6 @@ public class ExampleServiceImpl extends ServiceImpl<ExampleMapper, Example> impl
 
     @Override
     public void update(ExampleForUpdateDto dto) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
         Example data = ExampleConvert.INSTANCE.mapByUpdateDto(dto);
         Example source = exampleService.getById(data.getId());
 
@@ -112,7 +109,6 @@ public class ExampleServiceImpl extends ServiceImpl<ExampleMapper, Example> impl
 
     @Override
     public void delete(List<String> ids) throws Exception {
-        User operator = PermissionUtil.getCurrentUser();
 
         int associatedCount = 0;
         int notFoundCount = 0;

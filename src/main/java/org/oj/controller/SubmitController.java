@@ -43,18 +43,23 @@ public class SubmitController {
     @Resource
     private SubmitService submitService;
 
+    @PostMapping("/run")
+    public JsonRes runCode(@RequestBody String requestBody) throws Exception{
+        RunCodeDto runCodeDto = objectMapper.readValue(requestBody, RunCodeDto.class);
+        return JsonRes.success(submitService.testCode(runCodeDto));
+    }
+
     /**
-     * 创建提交记录
+     * 提交
      *
      * @param requestBody String
      * @return JsonRes
      * @throws Exception Exception
      */
+    @PostMapping("/submit")
     public JsonRes submitCode(@RequestBody String requestBody) throws Exception{
         SubmitForCreateDto dto = objectMapper.readValue(requestBody, SubmitForCreateDto.class);
-        submitService.submit(dto);
-
-        return JsonRes.success();
+        return JsonRes.success(submitService.submit(dto));
     }
 
 
@@ -65,7 +70,6 @@ public class SubmitController {
      * @return JsonRes
      */
     @PostMapping("/list")
-    @Permission("submit.view")
     public JsonRes list(@RequestBody String requestBody) throws Exception {
         QueryWrapper<Submit> wrapper = new QueryWrapper<>();
 
@@ -96,7 +100,6 @@ public class SubmitController {
      * @return JsonRes
      */
     @PostMapping("/create")
-    @Permission("submit.create")
     public JsonRes create(@RequestBody String requestBody) throws Exception {
         SubmitForCreateDto dto = objectMapper.readValue(requestBody, SubmitForCreateDto.class);
         submitService.create(dto);
@@ -110,7 +113,6 @@ public class SubmitController {
      * @return JsonRes
      */
     @GetMapping("/{id}/detail")
-    @Permission("submit.detail")
     public JsonRes detail(@PathVariable("id") String id) throws Exception {
         return JsonRes.success(submitService.detail(id));
     }
@@ -122,7 +124,6 @@ public class SubmitController {
      * @return JsonRes
      */
     @PutMapping("/update")
-    @Permission("submit.update")
     public JsonRes update(@RequestBody String requestBody) throws Exception {
         SubmitForUpdateDto dto = objectMapper.readValue(requestBody, SubmitForUpdateDto.class);
         submitService.update(dto);
@@ -136,7 +137,6 @@ public class SubmitController {
      * @return JsonRes
      */
     @DeleteMapping("/delete")
-    @Permission("submit.delete")
     public JsonRes delete(@RequestBody String requestBody) throws Exception {
         List<String> ids = objectMapper.readValue(requestBody, new TypeReference<List<String>>() {
         });
