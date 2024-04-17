@@ -24,7 +24,7 @@ public class UserForUpdateDto implements Serializable {
     private String id;
 
     /**
-     * 用户类型		
+     * 用户类型
      */
     private Integer roleId;
 
@@ -47,6 +47,11 @@ public class UserForUpdateDto implements Serializable {
      * 加密盐
      */
     private String salt;
+
+    /**
+     * 院系id
+     */
+    private String departmentId;
 
     /**
      * 所属班级

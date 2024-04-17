@@ -19,7 +19,7 @@ public class TClassForUpdateDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 
+     *
      */
     private String id;
 
@@ -27,4 +27,9 @@ public class TClassForUpdateDto implements Serializable {
      * 班级名称
      */
     private String className;
+
+    /**
+     * 院系id
+     */
+    private String departmentId;
 }

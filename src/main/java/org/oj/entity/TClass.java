@@ -24,7 +24,7 @@ public class TClass implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 
+     *
      */
     @TableField("id")
     private String id;
@@ -36,20 +36,26 @@ public class TClass implements Serializable {
     private String className;
 
     /**
-     * 
+     *
      */
     @TableField("deleted")
     @TableLogic
     private Integer deleted;
 
     /**
-     * 
+     * 院系id
+     */
+    @TableField("department_id")
+    private String departmentId;
+
+    /**
+     *
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
-     * 
+     *
      */
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;

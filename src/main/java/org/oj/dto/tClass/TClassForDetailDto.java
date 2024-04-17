@@ -33,6 +33,11 @@ public class TClassForDetailDto implements Serializable {
     private Integer deleted;
 
     /**
+     * 院系id
+     */
+    private String departmentId;
+
+    /**
      *
      */
     private LocalDateTime createTime;

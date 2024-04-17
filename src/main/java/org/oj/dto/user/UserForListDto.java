@@ -68,6 +68,11 @@ public class UserForListDto implements Serializable {
     private String email;
 
     /**
+     * 院系id
+     */
+    private String departmentId;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createTime;

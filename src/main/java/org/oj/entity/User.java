@@ -55,6 +55,12 @@ public class User implements Serializable {
     private String password;
 
     /**
+     * 院系id
+     */
+    @TableField("department_id")
+    private String departmentId;
+
+    /**
      * 加密盐
      */
     @TableField("salt")

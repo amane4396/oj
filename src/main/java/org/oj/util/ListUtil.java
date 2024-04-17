@@ -20,6 +20,7 @@ public class ListUtil {
     public static List<?> toList(String s){
         List<String> strings = Arrays.asList(s.substring(0, s.length() - 1).split(","));
         Stream<?> stream = strings.stream();
+        return null;
 
     }
 

@@ -77,6 +77,11 @@ public class UserForDetailDto implements Serializable {
      */
     private LocalDateTime updateTime;
 
+    /**
+     * 院系id
+     */
+    private String departmentId;
+
     // region 枚举名称、外键名称===========================================================
 
     // endregion =============================================================================================

@@ -28,6 +28,11 @@ public class TClassForListDto implements Serializable {
     private String className;
 
     /**
+     * 院系id
+     */
+    private String departmentId;
+
+    /**
      *
      */
     private Integer deleted;

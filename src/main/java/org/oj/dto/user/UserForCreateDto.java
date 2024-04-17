@@ -19,7 +19,7 @@ public class UserForCreateDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户类型		
+     * 用户类型
      */
     private Integer roleId;
 
@@ -57,4 +57,9 @@ public class UserForCreateDto implements Serializable {
      * 邮箱号
      */
     private String email;
+
+    /**
+     * 院系id
+     */
+    private String departmentId;
 }

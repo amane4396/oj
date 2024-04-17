@@ -22,4 +22,9 @@ public class TClassForCreateDto implements Serializable {
      * 班级名称
      */
     private String className;
+
+    /**
+     * 院系id
+     */
+    private String departmentId;
 }

@@ -6,6 +6,7 @@
         <resultMap id="BaseResultMap" type="org.oj.entity.TClass">
                     <id column="id" property="id"/>
                     <result column="class_name" property="className"/>
+                    <result column="department_id" property="departmentId"/>
                     <result column="deleted" property="deleted"/>
                     <result column="create_time" property="createTime"/>
                     <result column="update_time" property="updateTime"/>
